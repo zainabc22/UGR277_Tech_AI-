@@ -1,0 +1,23 @@
+﻿input_text,model_1_sentiment_label,model_1_sentiment_score,model_2_zeroshot_label,model_2_zeroshot_score,model_3_ner_entities,model_4_groq_classification,notes,tested_at
+Unauthorized login from IP 198.51.100.4 traced to Moscow targeting user John Miller at 3:47 AM,NEGATIVE,0.9961,possible anomaly,0.9,"{""entity_group"":""LOC"",""score"":0.9996966,""word"":""Moscow"",""start"":50,""end"":56}","**CRITICAL**
+
+This alert qualifies as CRITICAL because it indicates a potential unauthorized access to a user's account from an unknown, potentially malicious source.","1. Did Sentiment correctly identify concerning vs. routine records?
+No — sentiment failed entirely at this task. It labeled all 5 records as NEGATIVE, including the two clearly benign ones (routine firewall update, normal system utilization). This makes sense in hindsight: sentiment is designed for opinion/emotion detection in human language, not security classification. Technical alert text reads as ""negative"" regardless of whether it represents a real threat.",3/15/2026 11:46pm
+Routine firewall rule update completed on fw-01 during scheduled maintenance window,NEGATIVE,0.9986,routine activity,1.0,{},"INFORMATIONAL. This alert indicates routine and expected maintenance activity, so it does not warrant immediate attention or concern.","2. What category did Zero-Shot assign? Does it make sense?
+
+Mostly yes. It correctly labeled records 2 and 5 as ""routine activity"" with near-perfect confidence (1.0). It labeled records 1, 3, and 4 as ""possible anomaly"" — reasonable, though arguably record 1 (unauthorized login from Moscow) deserved ""critical threat"" rather than ""possible anomaly."" Zero-shot was conservative but directionally correct.",3/15/2026 11:46pm
+Phishing email with spoofed Amazon domain detected targeting finance@acmecorp.com,NEGATIVE,0.9959,possible anomaly,0.8,"{""entity_group"":""ORG"",""score"":0.99667954,""word"":""Amazon"",""start"":28,""end"":34}","HIGH: This alert is classified as HIGH because a phishing email with a spoofed domain from a trusted service like Amazon could potentially deceive employees into divulging sensitive information, resulting in a significant security risk.","3. What entities did NER extract? Were they useful?
+
+Mixed results. It correctly found Moscow (LOC) in record 1 and Amazon (ORG) in record 3 — both genuinely useful entities. Record 4 returned ""SS"" instead of ""SSH"" — a clear error, likely because NER is trained on names and places, not technical terminology. Records 2 and 5 returned nothing, which is correct since they contain no named entities.",3/15/2026 11:46pm
+Multiple failed SSH attempts from Beijing IP on Cloudflare production server — 47 attempts in 5 minutes,NEGATIVE,0.9994,possible anomaly,0.8,"{""entity_group"":""MISC"",""score"":0.9697967,""word"":""SS"",""start"":16,""end"":18}","HIGH
+
+The severity is HIGH because multiple failed login attempts from a suspicious IP in a short timeframe may indicate a brute-force attack attempt targeting sensitive credentials on a high-profile production server.","4. How did Groq compare to the HF models?
+Groq performed best by a significant margin. Its classifications were accurate, contextually appropriate, and came with clear one-sentence reasoning. It correctly escalated record 1 to CRITICAL where Zero-Shot only said ""possible anomaly,"" and correctly treated records 2 and 5 as INFORMATIONAL where Sentiment called them NEGATIVE.",3/15/2026 11:46pm
+System resource utilization normal across all monitored hosts — no anomalies detected,NEGATIVE,0.9880,routine activity,1.0,{},"INFORMATIONAL
+
+The system resource utilization check did not detect any anomalies, indicating the hosts are functioning normally and do not require immediate attention.","5. Where did models agree? Where did they disagree?
+
+Agreement: All models correctly handled records 2 and 5 as benign/routine in their own way — Zero-Shot gave ""routine activity,"" Groq gave INFORMATIONAL, and NER returned empty (no suspicious entities)
+
+Disagreement: Record 1 was the biggest split — Groq said CRITICAL, Zero-Shot said ""possible anomaly,"" and Sentiment said NEGATIVE (same as everything else). Record 4 also split, with Groq saying HIGH and Zero-Shot saying only ""possible anomaly""",3/15/2026 11:46pm
+,,,,,,,,
