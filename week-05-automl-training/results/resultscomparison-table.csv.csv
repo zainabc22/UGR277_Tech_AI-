@@ -1,0 +1,7 @@
+﻿input_text,generic_label,generic_score,finetuned_a_label,finetuned_a_score,finetuned_b_label,finetuned_b_score,winner,notes,tested_at
+Deleted file recovery initiated by analyst James Chen on NYPD workstation WS-047 at 11:52 PM — file: passwords_backup.xlsx,NEGATIVE,0.9966,,,,,,,3/22/2026 9:48pm
+"Scheduled disk imaging of evidence drive EV-024-088 completed
+successfully — hash verified",NEGATIVE,0.9986,,,,,,,3/22/2026 9:48pm
+USB device connected 47 times to air-gapped terminal at Brooklyn Evidence Lab in 6-hour window — user badge not logged,NEGATIVE,0.9924,,,,,,,3/22/2026 9:48pm
+System audit log shows no events between 14:00 and 18:30 — possible log tampering or system downtime,NEGATIVE,0.9977,,,,,,,3/22/2026 9:48pm
+Forensic image hash mismatch detected on evidence drive EV-2024-112 submitted by Officer Daniels — chain of custody flagged,NEGATIVE,0.9993,,,,,,,3/22/2026 9:48pm
